@@ -15,6 +15,9 @@
   "bugs": {
     "url": "https://github.com/Thomas-Franklin/cah/issues"
   },
+  "bin": {
+    "cah": "./cah"
+  },
   "homepage": "https://github.com/Thomas-Franklin/cah#readme",
   "dependencies": {
     "axios": "^0.19.2"
