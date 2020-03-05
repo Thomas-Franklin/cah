@@ -21,7 +21,7 @@ require('yargs')
 				break;
 		}
 	})
-	.command('deal', 'deal a random combination', async (argv) => {
+	.command('deal', 'deal a random combination', () => {}, async (argv) => {
 		if (argv.verbose) console.info('dealing a random hand');
 		let response = await deal();
 		console.log(JSON.stringify(response));
