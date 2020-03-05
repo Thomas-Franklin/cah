@@ -20,6 +20,7 @@
   },
   "homepage": "https://github.com/Thomas-Franklin/cah#readme",
   "dependencies": {
-    "axios": "^0.19.2"
+    "axios": "^0.19.2",
+    "yargs": "^15.1.0"
   }
 }

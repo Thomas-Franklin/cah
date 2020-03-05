@@ -10,9 +10,21 @@ require('yargs')
 				default: 'white'
 			})
 	}, async (argv) => {
-		if (argv.verbose) console.info(`Getting random ${argv.type} CAH card`)
+		if (argv.verbose) console.info(`Getting random ${argv.type} CAH card`);
 		let response = await getCard(argv.type);
-		console.log(response)
+		switch (argv.type) {
+			case "black":
+				console.log(response.text);
+				break;
+			default:
+				console.log(response);
+				break;
+		}
+	})
+	.command('deal', 'deal a random combination', async (argv) => {
+		if (argv.verbose) console.info('dealing a random hand');
+		let response = await deal();
+		console.log(JSON.stringify(response));
 	})
 	.option('verbose', {
 		alias: 'v',
@@ -42,7 +54,7 @@ async function getCard(type = 'white') {
 	switch (type) {
 		case "black":
 			let blackCards = randomCardData.blackCards;
-			card = blackCards[Math.floor(Math.random() * blackCards.length)].text;
+			card = blackCards[Math.floor(Math.random() * blackCards.length)];
 			break;
 		case "white":
 		default:
@@ -52,4 +64,20 @@ async function getCard(type = 'white') {
 	}
 
 	return card;
+}
+
+async function deal() {
+
+	let blackCard = await getCard('black');
+
+	let whiteCards = [];
+	for (let i = 0; i < blackCard.pick; i++) {
+		let whiteCard = await getCard();
+		whiteCards.push(whiteCard);
+	}
+
+	return {
+		blackCard: blackCard.text,
+		whiteCards
+	}
 }
