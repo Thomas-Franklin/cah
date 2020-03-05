@@ -1,0 +1,22 @@
+{
+  "name": "cah",
+  "version": "1.0.0",
+  "description": "CAH Random",
+  "main": "cah",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Thomas-Franklin/cah.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Thomas-Franklin/cah/issues"
+  },
+  "homepage": "https://github.com/Thomas-Franklin/cah#readme",
+  "dependencies": {
+    "axios": "^0.19.2"
+  }
+}

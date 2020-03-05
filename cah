@@ -1,0 +1,55 @@
+#!/usr/bin/env node
+const axios = require('axios').default;
+const BASE_URL = 'https://cards-against-humanity-api.herokuapp.com';
+
+require('yargs')
+	.command('random [type]', 'produce random card', (yargs) => {
+		yargs
+			.positional('type', {
+				describe: 'type of card',
+				default: 'white'
+			})
+	}, async (argv) => {
+		if (argv.verbose) console.info(`Getting random ${argv.type} CAH card`)
+		let response = await getCard(argv.type);
+		console.log(response)
+	})
+	.option('verbose', {
+		alias: 'v',
+		type: 'boolean',
+		description: 'Run with verbose logging'
+	})
+	.argv;
+
+async function getCard(type = 'white') {
+	let setResponse = await axios({
+		method: 'GET',
+		url: `${BASE_URL}/sets`
+	});
+
+	let setData = setResponse.data;
+
+	let randomSet = setData[Math.floor(Math.random() * setData.length)].setName;
+
+	let randomCardsResponse = await axios({
+		method: 'GET',
+		url: `${BASE_URL}/sets/${randomSet}`
+	});
+
+	let randomCardData = randomCardsResponse.data;
+
+	let card;
+	switch (type) {
+		case "black":
+			let blackCards = randomCardData.blackCards;
+			card = blackCards[Math.floor(Math.random() * blackCards.length)].text;
+			break;
+		case "white":
+		default:
+			let whiteCards = randomCardData.whiteCards;
+			card = whiteCards[Math.floor(Math.random() * whiteCards.length)];
+			break;
+	}
+
+	return card;
+}
